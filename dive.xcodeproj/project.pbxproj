@@ -15,6 +15,7 @@
 		F96C5C111CB8E51B00F6463B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96C5C101CB8E51B00F6463B /* Assets.xcassets */; };
 		F96C5C141CB8E51B00F6463B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96C5C121CB8E51B00F6463B /* LaunchScreen.storyboard */; };
 		F96C5C1C1CB8E59700F6463B /* VerticalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96C5C1B1CB8E59700F6463B /* VerticalScrollView.swift */; };
+		F96C5C1E1CB8F1B800F6463B /* TouchableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96C5C1D1CB8F1B800F6463B /* TouchableNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		F96C5C131CB8E51B00F6463B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F96C5C151CB8E51B00F6463B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F96C5C1B1CB8E59700F6463B /* VerticalScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalScrollView.swift; sourceTree = "<group>"; };
+		F96C5C1D1CB8F1B800F6463B /* TouchableNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchableNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				F96C5C051CB8E51B00F6463B /* AppDelegate.swift */,
 				F96C5C071CB8E51B00F6463B /* GameScene.sks */,
 				F96C5C091CB8E51B00F6463B /* GameScene.swift */,
+				F96C5C1D1CB8F1B800F6463B /* TouchableNode.swift */,
 				F96C5C1B1CB8E59700F6463B /* VerticalScrollView.swift */,
 				F96C5C0B1CB8E51B00F6463B /* GameViewController.swift */,
 				F96C5C0D1CB8E51B00F6463B /* Main.storyboard */,
@@ -150,6 +153,7 @@
 				F96C5C0C1CB8E51B00F6463B /* GameViewController.swift in Sources */,
 				F96C5C061CB8E51B00F6463B /* AppDelegate.swift in Sources */,
 				F96C5C1C1CB8E59700F6463B /* VerticalScrollView.swift in Sources */,
+				F96C5C1E1CB8F1B800F6463B /* TouchableNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

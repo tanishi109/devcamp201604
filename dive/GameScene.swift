@@ -10,34 +10,56 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    // var scrollNode: ScrollNode!
+    var touchableNode = [TouchableNode]()
+
+    private var startY: CGFloat = 0.0
+    private var lastY: CGFloat = 0.0
+    // タッチされているかどうか
+    private var touching = false
+    // 少しずつ移動させる
+    private var lastScrollDistY: CGFloat = 0.0
+    
     
     override func didMoveToView(view: SKView) {
-        // self.scrollNode = ScrollNode(size: CGSize(width: 1500, height: 44000))
-        // self.addChild(scrollNode)
-        
 
         // なんか置いてみる
-        let block = SKSpriteNode(
-            color: UIColor.greenColor(),
-            size: CGSizeMake(100, 100)
-        )
-
-        block.alpha = 0.25
-
-        block.position = CGPoint(
+        let touchableNode = TouchableNode()
+        touchableNode.position = CGPoint(
             x:CGRectGetMidX(self.frame),
             y:CGRectGetMidY(self.frame)
         )
-
-        self.addChild(block)
-        
+        self.addChild(touchableNode)
     }
     
+    override func update(currentTime: CFTimeInterval) {
+
+    }
+
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.touching = true
+        // store the starting position of the touch
+        let touch = touches.first
+        let location = touch!.locationInNode(self)
+        startY = location.y
+        lastY = location.y
+    }
     
-//    override func update(currentTime: CFTimeInterval) {
-//        // scrollNodeのupdateメソッドを呼ぶ
-//        self.scrollNode.update(currentTime)
-//    }
-    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        // Declare the touched symbol and its location on the screen
+        for touch: AnyObject in touches {
+            let location = touch.locationInNode(self)
+            let touchNode = self.nodeAtPoint(location)
+            if (touchNode.name == "touchable") {
+                let touch = touches.first
+                let location = touch!.locationInNode(self)
+                let currentY = location.y
+                lastScrollDistY =  lastY - currentY
+                touchNode.position.y -= lastScrollDistY
+                // Set new last location for next time
+                lastY = currentY
+
+            }
+        }
+    }
 }
+
