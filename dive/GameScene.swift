@@ -28,7 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func didMoveToView(view: SKView) {
 
-        // 緑
+        // 踏めるところ
         self.saintZone.position = CGPoint(
             x: CGRectGetMidX(self.frame),
             y: CGRectGetMidY(self.frame)
@@ -39,6 +39,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // スコア
         score = 0
         scoreLabelNode = SKLabelNode(fontNamed:"MarkerFelt-Wide")
+        scoreLabelNode.fontColor = UIColor.blackColor()
+        scoreLabelNode.alpha = 0.4
         scoreLabelNode.position = CGPoint( x: self.frame.midX, y: 3 * self.frame.size.height / 4 )
         scoreLabelNode.zPosition = 100
         scoreLabelNode.text = String(score)
@@ -51,11 +53,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = touch.locationInNode(self)
             let touchNode = self.nodeAtPoint(location)
             if (touchNode.name == "touchable") {
+                // タッチ座標
                 self.touching = true
                 let touch = touches.first
                 let location = touch!.locationInNode(self)
                 startY = location.y
                 lastY = location.y
+
+                // タッチ済みにする
+                if touchNode.alpha != 1.0 {
+                    touchNode.alpha = 1.0
+                }
             } else {
                 self.touchingBg = true
             }
@@ -65,26 +73,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // タッチ移動中
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        NSLog("\(self.touchingBg)")
-        // Declare the touched symbol and its location on the screen
+        // SaintZoneのタッチ中かどうか調べる
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             if (self.saintZone.containsPoint(location) && self.touchingBg == false) {
-                NSLog("*** hogehogehoge")
                 let touch = touches.first
                 let location = touch!.locationInNode(self)
                 let currentY = location.y
                 lastScrollDistY =  lastY - currentY
                 self.saintZone.position.y -= lastScrollDistY
-                
                 lastY = currentY
             }
+
+            if (self.saintZone.containsPoint(location)) {
+                // タッチ済みにする
+                if self.saintZone.children[0].alpha != 1.0 {
+                    self.saintZone.children[0].alpha = 1.0
+                }
+            }
+
         }
     }
 
     // タッチ終わり
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        NSLog("ENDENDENDENDENDENDEND")
         self.touching = false
         self.touchingBg = false
     }
@@ -94,14 +106,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.touching = false
     }
 
-    // 毎秒処理
+    // 毎フレームの処理
     override func update(currentTime: CFTimeInterval) {
+
+        // 十分画面外に出た
+        let topSaintZone    = self.saintZone.children[0]
+        let topSaintZonePos = self.convertPoint(topSaintZone.position, fromNode: self.saintZone)
+        let height = topSaintZone.calculateAccumulatedFrame().size.height
+
+        if topSaintZonePos.y > self.size.height + height / 2 + 100 {
+
+            // 下から出てくるようにする
+            self.saintZone.position.y = 0 - height
+
+            // スコア加算
+            if (topSaintZone.alpha == 1.0) {
+                score += 1
+                scoreLabelNode.text = String(score)
+                // スコアアニメーション
+                scoreLabelNode.runAction(SKAction.sequence([SKAction.scaleTo(1.5, duration:NSTimeInterval(0.1)), SKAction.scaleTo(1.0, duration:NSTimeInterval(0.1))]))
+            }
+
+            // 透過に戻す
+            topSaintZone.alpha = 0.25
+
+        }
+
         // タッチされてなかったら
         if !touching {
             // 上と下端の設定
             let limitFactor: CGFloat = 0.3
             let topLimitY: CGFloat = 0 * (-limitFactor)
-            if self.saintZone.position.y < topLimitY {
+            if self.saintZone.position.y < topLimitY - height {
                 // 行き過ぎたから戻す
                 self.saintZone.position.y = topLimitY
                 lastScrollDistY = 0.0
@@ -117,19 +153,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.saintZone.position.y -= lastScrollDistY
         }
 
-        // 高さがある程度行ったら
-        let topSaintZone    = self.saintZone.children[0]
-        let topSaintZonePos = self.convertPoint(topSaintZone.position, fromNode: self.saintZone)
-        let height = topSaintZone.calculateAccumulatedFrame().size.height
-
-        if topSaintZonePos.y > self.size.height + height / 2 + 100 {
-            self.saintZone.position.y = 0
-            score += 1
-            scoreLabelNode.text = String(score)
-            
-            // Add a little visual feedback for the score increment
-            scoreLabelNode.runAction(SKAction.sequence([SKAction.scaleTo(1.5, duration:NSTimeInterval(0.1)), SKAction.scaleTo(1.0, duration:NSTimeInterval(0.1))]))
-        }
+        // 毎時スクロール
+        self.saintZone.position.y += 1
     }
 
 }

@@ -16,7 +16,7 @@ class TouchableNode: SKNode {
         )
 
 
-        block.alpha = 0.25
+        block.alpha = 0.5
         block.name = "touchable"
 
         block.position = CGPoint(
