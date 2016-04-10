@@ -11,8 +11,8 @@ class TouchableNode: SKNode {
 
         // なんか置いてみる
         let block = SKSpriteNode(
-            color: UIColor.greenColor(),
-            size: CGSizeMake(UIScreen.mainScreen().bounds.size.width, getRand())
+            color: UIColor.whiteColor(),
+            size: CGSizeMake(UIScreen.mainScreen().bounds.size.width, 300)
         )
 
 
@@ -35,6 +35,11 @@ class TouchableNode: SKNode {
     private func getRandom() -> CGFloat {
        NSLog("called")
        return CGFloat(Int((arc4random_uniform(10)+1)*100))
+    }
+
+    // 毎秒処理
+    func update(currentTime: CFTimeInterval) {
+        NSLog("*****")
     }
 
 }
