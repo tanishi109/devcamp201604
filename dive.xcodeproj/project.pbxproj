@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F94F9E311CDCD96A0016C12F /* Sky.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94F9E301CDCD96A0016C12F /* Sky.swift */; };
 		F96C5C061CB8E51B00F6463B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96C5C051CB8E51B00F6463B /* AppDelegate.swift */; };
 		F96C5C081CB8E51B00F6463B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F96C5C071CB8E51B00F6463B /* GameScene.sks */; };
 		F96C5C0A1CB8E51B00F6463B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96C5C091CB8E51B00F6463B /* GameScene.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F94F9E301CDCD96A0016C12F /* Sky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sky.swift; sourceTree = "<group>"; };
 		F96C5C021CB8E51B00F6463B /* dive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F96C5C051CB8E51B00F6463B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F96C5C071CB8E51B00F6463B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				F96C5C101CB8E51B00F6463B /* Assets.xcassets */,
 				F96C5C121CB8E51B00F6463B /* LaunchScreen.storyboard */,
 				F96C5C151CB8E51B00F6463B /* Info.plist */,
+				F94F9E301CDCD96A0016C12F /* Sky.swift */,
 			);
 			path = dive;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F94F9E311CDCD96A0016C12F /* Sky.swift in Sources */,
 				F96C5C0A1CB8E51B00F6463B /* GameScene.swift in Sources */,
 				F96C5C0C1CB8E51B00F6463B /* GameViewController.swift in Sources */,
 				F96C5C061CB8E51B00F6463B /* AppDelegate.swift in Sources */,
@@ -301,6 +305,7 @@
 				F96C5C1A1CB8E51B00F6463B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

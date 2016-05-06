@@ -65,7 +65,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(timerLabelNode)
 
         GameTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "countDown", userInfo: nil, repeats: true)
-
+        
+        let sky = Sky()
+        sky.setScene(self)
+        self.addChild(sky)
     }
 
     // タッチ開始
