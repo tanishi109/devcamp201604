@@ -4,17 +4,16 @@ class TouchableNode: SKNode {
 
     override init() {
         super.init()
-        self.addSaintZones(self.getRandom)
+        self.addSaintZones()
     }
     
-    private func addSaintZones(getRand: () -> CGFloat) {
+    private func addSaintZones() {
 
         // なんか置いてみる
         let block = SKSpriteNode(
             color: UIColor.whiteColor(),
-            size: CGSizeMake(UIScreen.mainScreen().bounds.size.width, 300)
+            size: CGSizeMake(getRandom(300, max: 500), getRandom(300, max: 500))
         )
-
 
         block.alpha = 0.5
         block.name = "touchable"
@@ -32,14 +31,8 @@ class TouchableNode: SKNode {
         super.init(coder: aDecoder)
     }
     
-    private func getRandom() -> CGFloat {
-       NSLog("called")
-       return CGFloat(Int((arc4random_uniform(10)+1)*100))
-    }
-
-    // 毎秒処理
-    func update(currentTime: CFTimeInterval) {
-        NSLog("*****")
+    private func getRandom(min: UInt32, max: UInt32) -> CGFloat {
+       return CGFloat( Int(arc4random_uniform(min)) + Int(arc4random_uniform(max+1)) )
     }
 
 }

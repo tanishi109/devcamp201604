@@ -26,7 +26,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabelNode:SKLabelNode!
     var score = NSInteger()
 
+    // ゲームオーバー
+    var timerLabelNode:SKLabelNode!
+    var timer = NSInteger()
+    var canRestart = Bool()
+    var GameTimer = NSTimer()
+    
     override func didMoveToView(view: SKView) {
+
+        self.saintZone = TouchableNode()
 
         // 踏めるところ
         self.saintZone.position = CGPoint(
@@ -45,6 +53,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabelNode.zPosition = 100
         scoreLabelNode.text = String(score)
         self.addChild(scoreLabelNode)
+
+        // 時間
+        timer = 5
+        timerLabelNode = SKLabelNode(fontNamed:"MarkerFelt-Wide")
+        timerLabelNode.fontColor = UIColor.blueColor()
+        timerLabelNode.alpha = 0.4
+        timerLabelNode.position = CGPoint( x: 312 + 32, y: self.frame.height - 64 )
+        timerLabelNode.zPosition = 100
+        timerLabelNode.text = String(timer)
+        self.addChild(timerLabelNode)
+
+        GameTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "countDown", userInfo: nil, repeats: true)
+
     }
 
     // タッチ開始
@@ -69,8 +90,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
 
+        // restartできる
+        if canRestart {
+            self.resetScene()
+        }
+
     }
-    
+
     // タッチ移動中
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         // SaintZoneのタッチ中かどうか調べる
@@ -114,10 +140,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let topSaintZonePos = self.convertPoint(topSaintZone.position, fromNode: self.saintZone)
         let height = topSaintZone.calculateAccumulatedFrame().size.height
 
-        if topSaintZonePos.y > self.size.height + height / 2 + 100 {
+        if topSaintZonePos.y > self.size.height + height / 2 + 0 {
 
             // 下から出てくるようにする
-            self.saintZone.position.y = 0 - height
+            // self.saintZone.position.y = 0 - height
+
+            
+            self.saintZone.removeAllChildren()
+            self.saintZone = TouchableNode()
+            let x = CGFloat( Int(arc4random_uniform(UInt32(0 + 256))) + Int(arc4random_uniform(UInt32(self.size.width - 256))) )
+            
+
+            NSLog("\(self.saintZone)")
+//            self.saintZone.anchorPoint = CGPointMake(1.0, 1.0);
+            self.saintZone.position = CGPoint(
+//                x: CGRectGetMidX(self.frame),
+                x: x,
+                y: 10
+            )
+            NSLog("\(x)")
+            self.addChild(self.saintZone)
 
             // スコア加算
             if (topSaintZone.alpha == 1.0) {
@@ -155,6 +197,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         // 毎時スクロール
         self.saintZone.position.y += 1
+    }
+    
+    
+    func countDown () {
+        NSLog("count down")
+        timer -= 1
+        timerLabelNode.text = String(timer)
+        if timer == 0 {
+            self.canRestart = true
+            self.speed = 0
+            GameTimer.invalidate()
+
+//            self.saintZone.removeFromParent()
+
+        }
+    }
+
+    func resetScene () {
+        // Move bird to original position and reset velocity
+//        self.saintZone.removeAllChildren()
+        self.saintZone.removeFromParent()
+        
+        // Reset _canRestart
+        canRestart = false
+        
+        // Reset score
+        score = 0
+        scoreLabelNode.text = String(score)
+
+        timer = 5
+        timerLabelNode.text = String(timer)
+
+        GameTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "countDown", userInfo: nil, repeats: true)
+
+        self.saintZone.position = CGPoint(
+            x: CGRectGetMidX(self.frame),
+            y: CGRectGetMidY(self.frame)
+        )
+        
+        self.addChild(self.saintZone)
     }
 
 }
